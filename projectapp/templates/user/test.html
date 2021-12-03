@@ -1,0 +1,103 @@
+{% extends 'user/layout.html' %}
+
+{% block pagetitle %}
+Test Page
+{% endblock %}
+{% block first_row %}
+
+<p>
+    <pre>
+        {{ rsp }}
+    </pre>
+</p>
+<div class="row gx-4 gx-lg-5 align-items-center">
+   
+    <div class="col-md-9">
+      
+ <input type='text' name='username' id='username' class="form-control">
+ <p class="small" id='feedback'></p>
+    </div>
+    <div class="col-md-3">
+        <button class="btn btn-danger btn-lg" id='btn'>Check</button>        
+    </div>
+</div>
+<hr>
+<h3>State and LGA</h3>
+
+<div class="row gx-4 gx-lg-5 align-items-center">
+   
+    <div class="col-md-3">
+ <label>Select State</label>
+    </div>
+    <div class="col-md-6">
+ 
+       <select name="allstates" class='form-control' id='allstates'>
+        <option>Please Select</option>
+          {% for i in records %}
+          <option value="{{ i.state_id }}">{{ i.state_name }}</option>
+          {% endfor %}
+       </select>
+           </div>
+   
+</div>
+<div class="row" id='lgas'>
+
+</div>
+<script src="{{ url_for('static',filename='vendor/jquery/jquery.min.js')}}"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+
+
+
+
+
+
+
+$('#allstates').change(function(){
+    //make ajax call
+    var state = $(this).val() 
+    $.ajax({
+        url:"{{url_for('lga')}}",
+        data:"stateid="+state,
+        type:'GET',
+        dataType:'text',
+        success:function(m){
+            $('#lgas').html(m)
+        },
+        error:function(e){
+            console.log(e)
+        }
+    })
+})
+
+
+
+
+
+
+
+    $('#btn').click(function(){
+        var username = $('#username').val()
+        $.ajax({
+            url:"{{ url_for('check_availability')}}",
+            data:"user="+username,
+            dataType:'json',
+            type:'POST',
+            success:function(serverRsp){
+                if (serverRsp.status =='failed'){
+                    $('#feedback').addClass('alert-danger alert')
+                }else{
+                    $('#feedback').addClass('alert-success alert')
+                }
+               $('#feedback').html(serverRsp.msg)
+            },
+            error:function(err){},
+            beforeSend:function(){}
+        })
+    })
+})
+</script>
+{% endblock %}
+
+
+  

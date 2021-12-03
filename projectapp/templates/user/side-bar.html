@@ -1,0 +1,19 @@
+<div class="list-group">
+    <a href="{{ url_for('userprofile')}}" class="list-group-item">Home</a>
+    <a href="{{ url_for('gift')}}" class="list-group-item">Gift Registry</a>
+    <a href="{{ url_for('question') }}" class="list-group-item">Submit Question</a>
+
+    <a href="{{ url_for('questionajax') }}" class="list-group-item text-success">Submit Question BY AJAX</a>
+    <a href="{{ url_for('donatecash')}}" 
+    class="list-group-item">Donate Cash Gift (Pop up)</a>
+    
+    <a href="{{ url_for('addpicture')}}" 
+    class="list-group-item">Upload Picture</a>
+    {% if iv:%}
+    {% set file='docs/'+ iv.doc_filename %}
+    <a href="{{ url_for('static',filename=file)}}" class="list-group-item" target='_blank'>Download Invitation</a>
+    {% endif %}
+    <a href="{{ url_for('logout')}}" class="list-group-item">Logout</a>
+   
+    
+  </div>

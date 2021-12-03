@@ -1,0 +1,60 @@
+{% extends 'user/layout.html' %}
+
+{% block pagetitle %}
+Ask Your Question
+{% endblock %}
+
+{% block first_row %}
+  <!-- Page Content -->
+  <div class="container">
+
+    <!-- Page Heading/Breadcrumbs -->
+    
+
+   
+    <!-- Content Row -->
+    <div class="row">
+      <!-- Sidebar Column -->
+      <div class="col-lg-3 mb-4">
+	 
+      {% include 'user/side-bar.html' %}
+      </div>
+      <!-- Content Column -->
+      <div class="col-lg-9 mb-4">
+        {% with m=get_flashed_messages() %}
+        {% if m %}
+        <div class="alert alert-warning">
+        {% for msg in m %}
+       <p> {{ msg }}</p>
+        {% endfor %}
+      </div>
+      {% endif %}
+      
+        {% endwith %}
+         
+        <p>We are more than happy to answer your question as regards the upcoming birthday. Kindly type below</p>
+        <hr>
+        <form action="{{ url_for('submitquestion')}}" method="post" enctype="multipart/form-data">
+            <div class="form-group row">
+                <div class="col-md-3">
+                    <label>Type Question</label>
+                </div>
+                <div class="col-md-9">
+                   <textarea class="form-control" name='quest'></textarea>
+                </div> 
+            </div>
+            <div class="form-group row"> 
+            <div class="col-md-10 offset-2">
+                <button class="btn btn-danger btn-block btn-lg">Send</button>
+            </div>
+
+</div>
+
+        </form>
+      </div>
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+{% endblock %}

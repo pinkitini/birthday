@@ -1,0 +1,70 @@
+{% extends 'user/layout.html' %}
+
+{% block pagetitle %}
+Cash Donation/Gift
+{% endblock %}
+
+{% block first_row %}
+
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <!-- Page Heading/Breadcrumbs -->
+   
+    <!-- Content Row -->
+    <div class="row">
+      <!-- Sidebar Column -->
+      <div class="col-lg-3 mb-4">
+	   
+       {% include 'user/side-bar.html'%}
+     
+      </div>
+      <!-- Content Column -->
+      <div class="col-lg-9 mb-4">
+          {% with m=get_flashed_messages() %}
+          {% if m %}
+          <div class="alert alert-warning">
+          {% for msg in m %}
+         <p> {{ msg }}</p>
+          {% endfor %}
+        </div>
+        {% endif %}
+        
+          {% endwith %}
+ <h4>Payment Details</h4>
+<form action="{{url_for('confirmpay')}}" method="post">
+    <p>You are about to donate as follows:(Please keep the trnsaction ref no safe)</p>
+<table class="table">
+    <tr>
+        <td>Amount</td>
+        <td>N{{ deets.trx_amt}}</td>
+        <td>Transaction Ref</td>
+        <td>{{ deets.trx_ref}}
+         
+        </td>
+    </tr>
+    <tr>
+        <td>Status</td>
+        <td>{{ deets.trx_status}}</td>
+        <td colspan='2'>
+            <button class='btn btn-danger btn-lg'>Confirm Payment</button>
+        </td>
+       
+    </tr>
+</table>
+   
+   
+ 
+
+</form>
+
+      </div>
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'user/layout.html' %}
+
+{% block pagetitle %}
+Donate Cash Gift
+{% endblock %}
+
+{% block first_row %}
+  <!-- Page Content -->
+  <div class="container">
+ 
+    <!-- Content Row -->
+    <div class="row">
+      <!-- Sidebar Column -->
+      <div class="col-lg-3 mb-4">
+	 
+      {% include 'user/side-bar.html' %}
+      </div>
+      <!-- Content Column -->
+      <div class="col-lg-9 mb-4">
+        {% with m=get_flashed_messages() %}
+        {% if m %}
+        <div class="alert alert-warning">
+        {% for msg in m %}
+       <p> {{ msg }}</p>
+        {% endfor %}
+      </div>
+      {% endif %}
+      
+        {% endwith %}
+         
+        <p>You can donate cash gift towards the preparation of the birthday here:<br>
+        <b>Complete the form below to supply an amount you wish to give</b><br>
+    You will then be redirected to a page where you will be asked to supply your card details<br> An invoice will be generated for you thereafter.
+<br> Thank you for your generousity</p>
+        <form action="{{ url_for('donatecash')}}" method="post" id="paymentForm">
+            <div class="form-group row">
+                <div class="col-md-3">
+                    <label>Enter Amount</label>
+                </div>
+                <div class="col-md-6">
+                    <input type="text" name="amount" id="amount">
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-danger btn-sm" onclick="payWithPaystack()">Proceed</button>
+                </div>
+            </div>
+        </form>
+      </div>
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+<script src="https://js.paystack.co/v1/inline.js"></script> 
+<script>
+const paymentForm = document.getElementById('paymentForm');
+
+paymentForm.addEventListener("submit", payWithPaystack, false);
+
+function payWithPaystack(e) {
+  e.preventDefault();
+  let handler = PaystackPop.setup({
+
+    key: 'pk_test_b1d50ec6519c3894f51dfc33b30efb609d6b9a98', // Replace with your public key
+
+    email: "moatacad@gmail.com",
+
+    amount: document.getElementById("amount").value * 100,
+
+    ref: ''+Math.floor((Math.random() * 1000000000) + 1), 
+
+    onClose: function(){
+
+      alert('Window closed.');
+
+    },
+    callback: function(response){
+      let message = 'Payment complete! Reference: ' + response.reference;
+      //make ajax call here to update reference to paid in ur db    
+      alert(message);
+      document.location.href="{{url_for('userprofile')}}"
+    }
+
+  });
+
+  handler.openIframe();
+
+}
+</script>
+{% endblock %}

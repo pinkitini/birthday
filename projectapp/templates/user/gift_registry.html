@@ -1,0 +1,83 @@
+{% extends 'user/layout.html' %}
+
+{% block pagetitle %}
+Gift Registry
+{% endblock %}
+
+{% block first_row %}
+
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <!-- Page Heading/Breadcrumbs -->
+   
+    <!-- Content Row -->
+    <div class="row">
+      <!-- Sidebar Column -->
+      <div class="col-lg-3 mb-4">
+	   
+       {% include 'user/side-bar.html'%}
+     
+      </div>
+      <!-- Content Column -->
+      <div class="col-lg-9 mb-4">
+          {% with m=get_flashed_messages() %}
+          {% if m %}
+          <div class="alert alert-warning">
+          {% for msg in m %}
+         <p> {{ msg }}</p>
+          {% endfor %}
+        </div>
+        {% endif %}
+        
+          {% endwith %}
+ 
+<form action="" method="post">
+    <table class="table table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col"><input type='checkbox' id='selectall' name='selectall'></th>
+            <th scope="col">Item</th>
+            <th scope="col">Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+           
+            {% if allgifts %}
+            {% for t in allgifts %}
+          <tr> 
+<th scope="row">
+  
+  {% if t.id in mygifts %}
+  <input type='checkbox' value="{{ t.id }}" name='item' checked>
+  {% else %}
+  <input type='checkbox' value="{{ t.id }}" name='item'>
+  {% endif %}
+  
+ 
+</th>
+<td>{{ t.gift_name }}</td>
+<td>
+    <input type="number" name="quantity_{{t.id}}" class="form-control">
+</td>
+
+</tr>
+          {% endfor %}
+          {% endif %}
+           
+        </tbody>
+      </table>
+<div style='text-align:right'><button class='btn btn-danger btn-lg'>Give Gift(s)</button></div>
+
+</form>
+
+      </div>
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+
+{% endblock %}

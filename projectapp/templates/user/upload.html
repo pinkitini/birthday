@@ -1,0 +1,55 @@
+{% extends 'user/layout.html' %}
+
+{% block pagetitle %}
+Upload Picture
+{% endblock %}
+
+{% block first_row %}
+  <!-- Page Content -->
+  <div class="container">
+
+    <!-- Page Heading/Breadcrumbs -->
+    
+
+   
+    <!-- Content Row -->
+    <div class="row">
+      <!-- Sidebar Column -->
+      <div class="col-lg-3 mb-4">
+	 
+      {% include 'user/side-bar.html' %}
+      </div>
+      <!-- Content Column -->
+      <div class="col-lg-9 mb-4">
+        {% with m=get_flashed_messages() %}
+        {% if m %}
+        <div class="alert alert-warning">
+        {% for msg in m %}
+       <p> {{ msg }}</p>
+        {% endfor %}
+      </div>
+      {% endif %}
+      
+        {% endwith %}
+         
+        <p>Instruction for upload will be here: Plesae upload only png, jpg, gif and jpeg files</p>
+        <form action="{{ url_for('addpicture')}}" method="post" enctype="multipart/form-data">
+            <div class="form-group row">
+                <div class="col-md-3">
+                    <label>Upload Picture</label>
+                </div>
+                <div class="col-md-6">
+                    <input type="file" name="pic">
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-danger btn-sm">Upload!</button>
+                </div>
+            </div>
+        </form>
+      </div>
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+{% endblock %}

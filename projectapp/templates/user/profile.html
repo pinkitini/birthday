@@ -1,0 +1,56 @@
+{% extends 'user/layout.html' %}
+
+{% block pagetitle %}
+Profile Page
+{% endblock %}
+
+{% block first_row %}
+  <!-- Page Content -->
+  <div class="container">
+
+    <!-- Page Heading/Breadcrumbs -->
+    
+
+   
+    <!-- Content Row -->
+    <div class="row">
+      <!-- Sidebar Column -->
+      <div class="col-lg-3 mb-4">
+	 
+      {% include 'user/side-bar.html' %}
+
+ 
+      </div>
+      <!-- Content Column -->
+      <div class="col-lg-9 mb-4">
+        {% with m=get_flashed_messages() %}
+        {% if m %}
+        <div class="alert alert-warning">
+        {% for msg in m %}
+       <p> {{ msg }}</p>
+        {% endfor %}
+      </div>
+      {% endif %}
+      
+        {% endwith %}
+        <h2>Hi {{ data.fname }} {{ data.lname }},</h2>
+        {% if data.profile_pix != None:%}
+            {% set t = "images/guest"+'/'+ data.profile_pix %}
+        {% else%}
+            {% set t = '' %}
+        {% endif %}
+
+
+        <img src="{{ url_for('static', filename=t) }}" width='120' style='float:left; padding:10px'>
+
+        {% if data.profile_pix == None %}
+<p class='alert alert-warning'>You need to upload a profile picture <a href="{{ url_for('addpicture')}}" class="alert-link">Click here</a></p>
+        {% endif %}
+        <p>A welcome is a kind of greeting designed to introduce a person to a new place or situation, and to make them feel at ease. The term can similarly be used to describe the feeling of being accepted on the part of the new person. In some contexts, a welcome is extended to a stranger to an area or a household..</p>
+      </div>
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+{% endblock %}

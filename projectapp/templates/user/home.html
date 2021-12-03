@@ -1,0 +1,94 @@
+{% extends 'user/layout.html' %}
+
+{% block pagetitle %}
+Guest Registration App
+{% endblock %}
+{% block first_row %}
+
+<div class="row gx-4 gx-lg-5 align-items-center">
+    <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{ url_for('static', filename='images/5th-birthday-12.gif')}}" alt="..." /></div>
+    <div class="col-md-6">
+ 
+
+ <form name="registerform" id="registerform" action='' method="post">
+<div class="control-group form-group">
+<div class="controls">
+<label>First Name:</label>
+<input type="text" class="form-control" id="name" name='fname'>
+
+</div>
+</div>
+<div class="control-group form-group">
+<div class="controls">
+<label>Last Name:</label>
+<input type="text" class="form-control" id="name" name='lname'>
+
+</div>
+</div>
+<div class="control-group form-group">
+<div class="controls">
+<label>State</label>
+<select class="form-control" name="state">
+    {% for s in allstates %}
+  <option value="{{ s.state_id }}">{{ s.state_name }}</option>
+  {% endfor %}
+</select>
+</div>
+</div>
+<div class="control-group form-group">
+<div class="controls">
+<label>Email Address:</label>
+<input type="email" class="form-control" name='email' id="email" required>
+<p class="help-block text-muted">You will login with this</p>
+</div>
+</div>
+
+
+<div class="control-group form-group">
+<div class="controls">
+<label>Password:</label>
+<input type="password" class="form-control" id="password" name='password'>
+
+</div>
+</div>
+
+
+<input type="submit" class="btn btn-danger btn-block btn-lg" value="RSVP">
+</form>
+
+    </div>
+</div>
+
+
+{% endblock %}
+
+
+{% block second_row %}
+<h2>Accommodation</h2>
+{#{ hostels }#}
+<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+    {% if hostels.status == 1%}
+    {% for h in hostels.data %}
+        <div class="col-md-3 mb-5">
+            <div class="card h-100">
+                <!-- Product image-->
+                <img class="card-img-top" src="{{h.propertyPix}}" alt="..." />
+                <!-- Product details-->
+                <div class="card-body p-4">
+                    <div class="text-center">
+                        <!-- Product name-->
+                        <h5 class="fw-bolder">{{h.propertyName}}</h5>
+                        <!-- Product price-->
+                       
+                     ${{h.propertyPrice|currencyFormat }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+     {% else %}
+     <div class="col mb-5"> No Hostel Available</div> 
+    {% endif %}
+
+</div>
+{% endblock %}
